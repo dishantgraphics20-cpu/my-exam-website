@@ -32,7 +32,7 @@ app.use('/admin', require('./routes/admin'));
 
 
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 const server = app.listen(PORT, () => {
     console.log(`🚀 Aptitude Quest server running on port ${PORT}`);
