@@ -1,20 +1,20 @@
 const mysql = require("mysql");
 
 const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
+  host: process.env.DB_HOST,      // mysql.railway.internal
+  user: process.env.DB_USER,      // root
+  password: process.env.DB_PASS,  // railway password
+  database: process.env.DB_NAME,  // railway
   port: 3306,
-  multipleStatements: true,
+  ssl: { rejectUnauthorized: false }
 });
 
-db.connect((err) => {
+db.connect(err => {
   if (err) {
     console.error("❌ MySQL connection failed:", err);
-    return;
+  } else {
+    console.log("✅ MySQL Connected");
   }
-  console.log("✅ MySQL Connected");
 });
 
 /* 🔥 AUTO CREATE TABLES */
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS students (
 );
 `;
 
-db.query(initSQL, (err) => {
+db.query(initSQL, err => {
   if (err) console.error("❌ Table create error:", err);
   else console.log("✅ Tables ready");
 });
