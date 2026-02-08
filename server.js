@@ -1,5 +1,4 @@
 require("dotenv").config();
-require("./database/db");
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -30,17 +29,7 @@ app.use('/', require('./routes/index'));
 app.use('/student', require('./routes/student'));
 app.use('/admin', require('./routes/admin'));
 
-// Database connection
-db.connect((err) => {
-    if (err) {
-        console.error('Database connection failed:', err);
-        if (err.code === 'ER_BAD_DB_ERROR') {
-            console.log('SOLUTION: Run database/SIMPLE_FIX.sql in phpMyAdmin');
-        }
-        return;
-    }
-    console.log('✅ Connected to MySQL database');
-});
+
 
 // Start server
 const PORT = process.env.PORT || 3000;
