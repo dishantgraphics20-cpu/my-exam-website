@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>🎯 Aptitude Quest</h1>
+                </div>
+                <div class="nav-buttons">
+                    <a href="/admin/dashboard" class="btn btn-secondary">Dashboard</a>
+                    <a href="/admin/questions" class="btn btn-secondary">Questions</a>
+                    <a href="/admin/results" class="btn btn-secondary">Results</a>
+                    <a href="/admin/logout" class="btn btn-secondary">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="dashboard">
+            <div class="welcome-card">
+                <h2 style="color: #667eea; margin-bottom: 1rem;">View Students</h2>
+                <p style="color: #666;">Manage and monitor student accounts</p>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Roll Number</th>
+                            <th>Status</th>
+                            <th>Test Score</th>
+                            <th>Submission Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% students.forEach(function(student) { %>
+                            <tr>
+                                <td><%= student.id %></td>
+                                <td><strong><%= student.roll_no %></strong></td>
+                                <td>
+                                    <% if (student.total_score !== null) { %>
+                                        <span style="background: #28a745; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.9rem;">
+                                            ✅ Completed
+                                        </span>
+                                    <% } else { %>
+                                        <span style="background: #ffc107; color: #333; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.9rem;">
+                                            ⏳ Not Attempted
+                                        </span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (student.total_score !== null) { %>
+                                        <span style="font-weight: 600; color: #667eea;"><%= student.total_score %>/60</span>
+                                    <% } else { %>
+                                        <span style="color: #666;">-</span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (student.submitted_at) { %>
+                                        <%= new Date(student.submitted_at).toLocaleDateString() %>
+                                    <% } else { %>
+                                        <span style="color: #666;">-</span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (student.total_score !== null) { %>
+                                        <a href="/admin/results#student-<%= student.id %>" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">View Result</a>
+                                    <% } else { %>
+                                        <span style="color: #666; font-size: 0.9rem;">No result yet</span>
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+                
+                <% if (students.length === 0) { %>
+                    <div style="text-align: center; padding: 3rem; color: #666;">
+                        <p style="font-size: 1.2rem;">No students found in the system.</p>
+                    </div>
+                <% } %>
+            </div>
+
+            <div class="welcome-card" style="margin-top: 2rem;">
+                <h3 style="color: #667eea; margin-bottom: 1rem;">Student Statistics</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+                        <h4 style="color: #667eea; margin-bottom: 0.5rem;">👥 Total Students</h4>
+                        <p style="color: #666; font-size: 1.5rem; font-weight: 600;"><%= students.length %></p>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+                        <h4 style="color: #667eea; margin-bottom: 0.5rem;">✅ Completed Test</h4>
+                        <p style="color: #666; font-size: 1.5rem; font-weight: 600;">
+                            <%= students.filter(s => s.total_score !== null).length %>
+                        </p>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+                        <h4 style="color: #667eea; margin-bottom: 0.5rem;">⏳ Pending</h4>
+                        <p style="color: #666; font-size: 1.5rem; font-weight: 600;">
+                            <%= students.filter(s => s.total_score === null).length %>
+                        </p>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+                        <h4 style="color: #667eea; margin-bottom: 0.5rem;">📊 Completion Rate</h4>
+                        <p style="color: #666; font-size: 1.5rem; font-weight: 600;">
+                            <%= students.length > 0 ? Math.round((students.filter(s => s.total_score !== null).length / students.length) * 100) : 0 %>%
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

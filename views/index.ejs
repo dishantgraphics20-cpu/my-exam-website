@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>🎯 Aptitude Quest</h1>
+                </div>
+                <div class="nav-buttons">
+                    <a href="/student/login" class="btn btn-primary">Student Login</a>
+                    <a href="/admin/login" class="btn btn-secondary">Admin Login</a>
+                    <a href="/admin/login" style="color: #667eea; text-decoration: none; margin-left: 1rem;">🔐 Admin Access</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to Aptitude Quest</h1>
+                <p class="hero-subtitle">Test your knowledge and challenge your limits with our comprehensive aptitude examination platform</p>
+                <div class="hero-buttons">
+                    <a href="/student/login" class="btn btn-large btn-primary">Start Test</a>
+                    <a href="#rules" class="btn btn-large btn-outline">View Rules</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="rules" class="rules-section">
+            <div class="container">
+                <h2 class="section-title">Examination Rules</h2>
+                <div class="rules-grid">
+                    <div class="rule-card">
+                        <div class="rule-icon">⏱️</div>
+                        <h3>Test Duration</h3>
+                        <p>60 minutes total time</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-icon">📝</div>
+                        <h3>Total Questions</h3>
+                        <p>60 multiple choice questions</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-icon">💯</div>
+                        <h3>Scoring</h3>
+                        <p>Each question carries 1 mark</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-icon">⏰</div>
+                        <h3>Time per Question</h3>
+                        <p>1 minute per question</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-icon">🔒</div>
+                        <h3>Single Attempt</h3>
+                        <p>Re-attempt is NOT allowed</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-icon">✅</div>
+                        <h3>One Submission</h3>
+                        <p>Test can be submitted only once</p>
+                    </div>
+                </div>
+                
+                <div class="test-structure">
+                    <h3>Test Structure</h3>
+                    <div class="structure-grid">
+                        <div class="structure-item">
+                            <h4>📊 Quantitative Aptitude</h4>
+                            <p>20 Questions</p>
+                        </div>
+                        <div class="structure-item">
+                            <h4>🧩 Logical Reasoning</h4>
+                            <p>20 Questions</p>
+                        </div>
+                        <div class="structure-item">
+                            <h4>📚 Verbal Ability</h4>
+                            <p>20 Questions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">Why Choose Aptitude Quest?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>🎯 Comprehensive Testing</h3>
+                        <p>Cover all major aptitude areas with carefully crafted questions</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>⏱️ Timed Assessment</h3>
+                        <p>Real-time timer to simulate actual examination conditions</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📊 Instant Results</h3>
+                        <p>Get your scores immediately after completing the test</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔒 Secure Platform</h3>
+                        <p>Safe and reliable examination environment with proper authentication</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Aptitude Quest. All rights reserved.</p>
+            <p>Online Examination System for Modern Learning</p>
+        </div>
+    </footer>
+</body>
+</html>

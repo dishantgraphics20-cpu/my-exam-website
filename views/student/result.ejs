@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>🎯 Aptitude Quest</h1>
+                </div>
+                <div class="nav-buttons">
+                    <a href="/student/logout" class="btn btn-secondary">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="result-container">
+            <div class="result-card">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+                    <h2 style="color: #667eea; margin-bottom: 0.5rem;">Test Completed Successfully!</h2>
+                    <p style="color: #666; font-size: 1.1rem;">Your aptitude test has been submitted</p>
+                </div>
+
+                <div class="score-display">
+                    <%= total_score %>/60
+                </div>
+                
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <p style="color: #666; font-size: 1.1rem;">Total Score</p>
+                </div>
+
+                <div class="section-scores">
+                    <div class="section-score">
+                        <h4>📊 Quantitative Aptitude</h4>
+                        <div class="score"><%= quant_score %>/20</div>
+                    </div>
+                    <div class="section-score">
+                        <h4>🧩 Logical Reasoning</h4>
+                        <div class="score"><%= logical_score %>/20</div>
+                    </div>
+                    <div class="section-score">
+                        <h4>📚 Verbal Ability</h4>
+                        <div class="score"><%= verbal_score %>/20</div>
+                    </div>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-top: 2rem;">
+                    <h3 style="color: #667eea; margin-bottom: 1rem;">Performance Summary</h3>
+                    <div style="display: grid; gap: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #666;">Percentage Score:</span>
+                            <span style="font-weight: 600; color: #667eea;"><%= Math.round((total_score/60)*100) %>%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #666;">Correct Answers:</span>
+                            <span style="font-weight: 600; color: #28a745;"><%= total_score %></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #666;">Incorrect Answers:</span>
+                            <span style="font-weight: 600; color: #dc3545;"><%= 60 - total_score %></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <div class="alert alert-success" style="text-align: left;">
+                        <strong>✅ Submission Confirmed:</strong> Your test has been successfully submitted and recorded in our system. You cannot re-attempt the test as per examination rules.
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="/student/logout" class="btn btn-primary">Finish & Logout</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

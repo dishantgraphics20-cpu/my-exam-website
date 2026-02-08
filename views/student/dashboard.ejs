@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>🎯 Aptitude Quest</h1>
+                </div>
+                <div class="nav-buttons">
+                    <span style="margin-right: 1rem; color: #666;">Welcome, <%= student.roll_no %></span>
+                    <a href="/student/logout" class="btn btn-secondary">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="dashboard">
+            <div class="welcome-card">
+                <h2 style="color: #667eea; margin-bottom: 1rem;">Welcome to Your Dashboard</h2>
+                <p style="font-size: 1.1rem; color: #666; margin-bottom: 1.5rem;">
+                    Roll Number: <strong><%= student.roll_no %></strong>
+                </p>
+                
+                <% if (hasAttempted) { %>
+                    <div style="background: #d4edda; color: #155724; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+                        <h3 style="margin-bottom: 0.5rem;">✅ Test Completed</h3>
+                        <p>You have already attempted the aptitude test. Re-attempt is not allowed as per examination rules.</p>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <a href="/student/logout" class="btn btn-primary">Logout</a>
+                    </div>
+                <% } else { %>
+                    <div style="background: #fff3cd; color: #856404; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+                        <h3 style="margin-bottom: 0.5rem;">📝 Test Ready</h3>
+                        <p>You haven't attempted the test yet. Click the button below to start your aptitude test.</p>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <a href="/student/test" class="btn btn-large btn-primary">Start Aptitude Test</a>
+                    </div>
+                <% } %>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">⏱️</div>
+                    <h3>Test Duration</h3>
+                    <p>60 Minutes</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <h3>Total Questions</h3>
+                    <p>60 Questions</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💯</div>
+                    <h3>Total Marks</h3>
+                    <p>60 Marks</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <h3>Test Status</h3>
+                    <p><%= hasAttempted ? 'Completed' : 'Not Attempted' %></p>
+                </div>
+            </div>
+
+            <div class="welcome-card">
+                <h3 style="color: #667eea; margin-bottom: 1rem;">Important Instructions</h3>
+                <ul style="text-align: left; color: #666; line-height: 1.8;">
+                    <li>Once you start the test, you must complete it within 60 minutes</li>
+                    <li>The test contains 60 multiple-choice questions</li>
+                    <li>Each question carries 1 mark</li>
+                    <li>You cannot go back to previous questions</li>
+                    <li>Re-attempt is not allowed under any circumstances</li>
+                    <li>Make sure you have a stable internet connection</li>
+                    <li>Do not refresh the page during the test</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

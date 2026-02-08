@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>🎯 Aptitude Quest</h1>
+                </div>
+                <div class="nav-buttons">
+                    <a href="/admin/dashboard" class="btn btn-secondary">Dashboard</a>
+                    <a href="/admin/questions" class="btn btn-secondary">Questions</a>
+                    <a href="/admin/logout" class="btn btn-secondary">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="dashboard">
+            <div class="form-container" style="max-width: 800px;">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <h2 style="color: #667eea; margin-bottom: 0.5rem;">Edit Question</h2>
+                    <p style="color: #666;">Modify the question details</p>
+                </div>
+                
+                <form action="/admin/questions/edit/<%= question.id %>" method="POST">
+                    <div class="form-group">
+                        <label for="section">Section</label>
+                        <select id="section" name="section" required style="width: 100%; padding: 12px 16px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 1rem;">
+                            <option value="">Select Section</option>
+                            <option value="quantitative" <%= question.section === 'quantitative' ? 'selected' : '' %>>Quantitative Aptitude</option>
+                            <option value="logical" <%= question.section === 'logical' ? 'selected' : '' %>>Logical Reasoning</option>
+                            <option value="verbal" <%= question.section === 'verbal' ? 'selected' : '' %>>Verbal Ability</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="question">Question</label>
+                        <textarea id="question" name="question" required placeholder="Enter the question text" style="width: 100%; padding: 12px 16px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 1rem; min-height: 100px; resize: vertical;"><%= question.question %></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="option_a">Option A</label>
+                        <input type="text" id="option_a" name="option_a" required placeholder="Enter option A" value="<%= question.option_a %>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="option_b">Option B</label>
+                        <input type="text" id="option_b" name="option_b" required placeholder="Enter option B" value="<%= question.option_b %>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="option_c">Option C</label>
+                        <input type="text" id="option_c" name="option_c" required placeholder="Enter option C" value="<%= question.option_c %>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="option_d">Option D</label>
+                        <input type="text" id="option_d" name="option_d" required placeholder="Enter option D" value="<%= question.option_d %>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="correct_option">Correct Option</label>
+                        <select id="correct_option" name="correct_option" required style="width: 100%; padding: 12px 16px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 1rem;">
+                            <option value="">Select Correct Answer</option>
+                            <option value="a" <%= question.correct_option === 'a' ? 'selected' : '' %>>Option A</option>
+                            <option value="b" <%= question.correct_option === 'b' ? 'selected' : '' %>>Option B</option>
+                            <option value="c" <%= question.correct_option === 'c' ? 'selected' : '' %>>Option C</option>
+                            <option value="d" <%= question.correct_option === 'd' ? 'selected' : '' %>>Option D</option>
+                        </select>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="submit" class="form-submit">Update Question</button>
+                        <a href="/admin/questions" class="btn btn-secondary" style="text-align: center; text-decoration: none; padding: 14px;">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>🎯 Aptitude Quest</h1>
+                </div>
+                <div class="nav-buttons">
+                    <a href="/student/logout" class="btn btn-secondary">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="test-container">
+            <div class="test-card">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">⚠️</div>
+                    <h2 style="color: #dc3545; margin-bottom: 0.5rem;">Test Already Attempted</h2>
+                    <p style="color: #666; font-size: 1.1rem;">You have already attempted the test</p>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <p style="color: #666; font-size: 0.9rem;">
+                        Roll Number: <%= student.roll_no %>
+                    </p>
+                    <p style="color: #666; font-size: 0.9rem; margin-top: 1rem;">
+                        Each student can attempt the test only once.
+                    </p>
+                    <div style="margin-top: 2rem;">
+                        <a href="/student/dashboard" class="btn btn-primary">Back to Dashboard</a>
+                        <a href="/student/logout" class="btn btn-secondary">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

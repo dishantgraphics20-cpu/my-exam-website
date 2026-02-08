@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>🎯 Aptitude Quest</h1>
+                </div>
+                <div class="nav-buttons">
+                    <a href="/admin/dashboard" class="btn btn-secondary">Dashboard</a>
+                    <a href="/admin/questions" class="btn btn-secondary">Questions</a>
+                    <a href="/admin/students" class="btn btn-secondary">Students</a>
+                    <a href="/admin/logout" class="btn btn-secondary">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="dashboard">
+            <div class="welcome-card">
+                <h2 style="color: #667eea; margin-bottom: 1rem;">Test Results</h2>
+                <p style="color: #666;">View and analyze student performance</p>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Roll Number</th>
+                            <th>Total Score</th>
+                            <th>Percentage</th>
+                            <th>Quantitative</th>
+                            <th>Logical</th>
+                            <th>Verbal</th>
+                            <th>Submission Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% let rank = 1; %>
+                        <% results.forEach(function(result) { %>
+                            <tr id="student-<%= result.student_id %>">
+                                <td>
+                                    <span style="background: #667eea; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-weight: 600;">
+                                        #<%= rank %>
+                                    </span>
+                                </td>
+                                <td><strong><%= result.roll_no %></strong></td>
+                                <td>
+                                    <span style="font-weight: 600; color: #667eea; font-size: 1.1rem;"><%= result.total_score %>/60</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: 600; color: <%= result.total_score >= 40 ? '#28a745' : result.total_score >= 30 ? '#ffc107' : '#dc3545' %>;">
+                                        <%= Math.round((result.total_score/60)*100) %>%
+                                    </span>
+                                </td>
+                                <td><%= result.quant_score %>/20</td>
+                                <td><%= result.logical_score %>/20</td>
+                                <td><%= result.verbal_score %>/20</td>
+                                <td><%= new Date(result.submitted_at).toLocaleDateString() %></td>
+                            </tr>
+                            <% rank++; %>
+                        <% }); %>
+                    </tbody>
+                </table>
+                
+                <% if (results.length === 0) { %>
+                    <div style="text-align: center; padding: 3rem; color: #666;">
+                        <p style="font-size: 1.2rem;">No test results available yet.</p>
+                    </div>
+                <% } %>
+            </div>
+
+            <% if (results.length > 0) { %>
+                <div class="welcome-card" style="margin-top: 2rem;">
+                    <h3 style="color: #667eea; margin-bottom: 1rem;">Performance Analysis</h3>
+                    
+                    <% 
+                    let totalStudents = results.length;
+                    let avgScore = results.reduce((sum, r) => sum + r.total_score, 0) / totalStudents;
+                    let highestScore = Math.max(...results.map(r => r.total_score));
+                    let lowestScore = Math.min(...results.map(r => r.total_score));
+                    let avgQuant = results.reduce((sum, r) => sum + r.quant_score, 0) / totalStudents;
+                    let avgLogical = results.reduce((sum, r) => sum + r.logical_score, 0) / totalStudents;
+                    let avgVerbal = results.reduce((sum, r) => sum + r.verbal_score, 0) / totalStudents;
+                    %>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+                            <h4 style="color: #667eea; margin-bottom: 0.5rem;">📊 Average Score</h4>
+                            <p style="color: #666; font-size: 1.5rem; font-weight: 600;"><%= Math.round(avgScore) %>/60</p>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+                            <h4 style="color: #667eea; margin-bottom: 0.5rem;">🏆 Highest Score</h4>
+                            <p style="color: #666; font-size: 1.5rem; font-weight: 600;"><%= highestScore %>/60</p>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+                            <h4 style="color: #667eea; margin-bottom: 0.5rem;">📉 Lowest Score</h4>
+                            <p style="color: #666; font-size: 1.5rem; font-weight: 600;"><%= lowestScore %>/60</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <h4 style="color: #667eea; margin-bottom: 1rem;">Section-wise Average Performance</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+                                <h5 style="color: #667eea; margin-bottom: 0.5rem;">📊 Quantitative</h5>
+                                <p style="color: #666; font-size: 1.2rem; font-weight: 600;"><%= Math.round(avgQuant) %>/20</p>
+                            </div>
+                            <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+                                <h5 style="color: #667eea; margin-bottom: 0.5rem;">🧩 Logical</h5>
+                                <p style="color: #666; font-size: 1.2rem; font-weight: 600;"><%= Math.round(avgLogical) %>/20</p>
+                            </div>
+                            <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+                                <h5 style="color: #667eea; margin-bottom: 0.5rem;">📚 Verbal</h5>
+                                <p style="color: #666; font-size: 1.2rem; font-weight: 600;"><%= Math.round(avgVerbal) %>/20</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </main>
+</body>
+</html>

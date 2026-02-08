@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="main-content" style="padding: 100px 20px;">
+        <div class="form-container">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h1 style="color: #667eea; margin-bottom: 0.5rem;">🎯 Aptitude Quest</h1>
+                <h2>Student Login</h2>
+                <p style="color: #666;">Enter your roll number to access the test</p>
+            </div>
+            
+            <% if (typeof error !== 'undefined') { %>
+                <div class="alert alert-error">
+                    <%= error %>
+                </div>
+            <% } %>
+            
+            <form action="/student/login" method="POST">
+                <div class="form-group">
+                    <label for="roll_no">Roll Number</label>
+                    <input type="text" id="roll_no" name="roll_no" required placeholder="Enter 4-digit roll number">
+                </div>
+                
+                <button type="submit" class="form-submit">Login to Test</button>
+            </form>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <p style="color: #666; font-size: 0.9rem;">
+                    Demo: Any 4-digit roll number (e.g., 1234)
+                </p>
+                <div style="margin-top: 1rem;">
+                    <a href="/admin/login" style="color: #667eea; text-decoration: none; margin-right: 1rem;">
+                        🔐 Admin Access
+                    </a>
+                    <a href="/" style="color: #667eea; text-decoration: none; margin-top: 1rem; display: inline-block;">
+                        ← Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
