@@ -2,9 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database/connection');
 
-// ==========================
-// STUDENT LOGIN (ANY 4 DIGIT)
-// ==========================
 router.get('/login', (req, res) => {
     res.render('student/login', { title: 'Student Login - Aptitude Quest' });
 });
@@ -16,29 +13,24 @@ router.post('/login', (req, res) => {
         return res.redirect('/student/login');
     }
 
-    const checkQuery = "SELECT * FROM students WHERE roll_no = ?";
-
-    db.query(checkQuery, [roll_no], (err, results) => {
+    db.query("SELECT * FROM students WHERE roll_no = $1", [roll_no], (err, results) => {
         if (err) {
             console.error(err);
             return res.redirect('/student/login');
         }
 
         if (results.length === 0) {
-            const insertQuery = "INSERT INTO students (roll_no, has_attempted) VALUES (?, 0)";
-
-            db.query(insertQuery, [roll_no], (err2, insertResult) => {
+            db.query("INSERT INTO students (roll_no, has_attempted) VALUES ($1, false) RETURNING id", [roll_no], (err2, insertResult) => {
                 if (err2) {
                     console.error(err2);
                     return res.redirect('/student/login');
                 }
 
                 req.session.student = {
-                    id: insertResult.insertId,
+                    id: insertResult[0].id,
                     roll_no
                 };
 
-                console.log("STUDENT LOGIN SUCCESS:", roll_no);
                 res.redirect('/student/dashboard');
             });
         } else {
@@ -47,15 +39,11 @@ router.post('/login', (req, res) => {
                 roll_no: results[0].roll_no
             };
 
-            console.log("STUDENT LOGIN SUCCESS:", roll_no);
             res.redirect('/student/dashboard');
         }
     });
 });
 
-// ==========================
-// STUDENT DASHBOARD
-// ==========================
 router.get('/dashboard', (req, res) => {
     if (!req.session.student) {
         return res.redirect('/student/login');
@@ -63,12 +51,12 @@ router.get('/dashboard', (req, res) => {
 
     const roll_no = req.session.student.roll_no;
 
-    db.query("SELECT has_attempted FROM students WHERE roll_no = ?", [roll_no], (err, results) => {
+    db.query("SELECT has_attempted FROM students WHERE roll_no = $1", [roll_no], (err, results) => {
         if (err || results.length === 0) {
             return res.redirect('/student/login');
         }
 
-        const hasAttempted = results[0].has_attempted === 1;
+        const hasAttempted = results[0].has_attempted === true;
 
         res.render('student/dashboard', {
             title: 'Student Dashboard - Aptitude Quest',
@@ -78,9 +66,6 @@ router.get('/dashboard', (req, res) => {
     });
 });
 
-// ==========================
-// TEST PAGE (ONE TIME ONLY)
-// ==========================
 router.get('/test', (req, res) => {
     if (!req.session.student) {
         return res.redirect('/student/login');
@@ -88,9 +73,8 @@ router.get('/test', (req, res) => {
 
     const roll_no = req.session.student.roll_no;
 
-    // already attempted check
     db.query(
-        "SELECT has_attempted FROM students WHERE roll_no = ?",
+        "SELECT has_attempted FROM students WHERE roll_no = $1",
         [roll_no],
         (err, result) => {
             if (err) {
@@ -102,20 +86,19 @@ router.get('/test', (req, res) => {
                 return res.redirect('/student/login');
             }
 
-            if (result[0].has_attempted === 1) {
+            if (result[0].has_attempted === true) {
                 return res.send("You have already attempted the test");
             }
 
-            // fetch ALL questions
             db.query(
                 "SELECT * FROM questions ORDER BY section, id",
+                [],
                 (err, questions) => {
                     if (err) {
                         console.log(err);
                         return res.send("Question fetch error");
                     }
 
-                    // Handle case when no questions exist
                     if (!questions || questions.length === 0) {
                         return res.render("student/test", {
                             title: 'Aptitude Test - Aptitude Quest',
@@ -125,7 +108,6 @@ router.get('/test', (req, res) => {
                         });
                     }
 
-                    // Group questions by section and add numbering
                     const groupedQuestions = {
                         quantitative: [],
                         logical: [],
@@ -171,9 +153,6 @@ router.get('/test', (req, res) => {
     );
 });
 
-// ==========================
-// TEST SUBMIT
-// ==========================
 router.post('/submit', (req, res) => {
     if (!req.session.student) {
         return res.redirect('/student/login');
@@ -181,8 +160,7 @@ router.post('/submit', (req, res) => {
 
     const roll_no = req.session.student.roll_no;
 
-    // Calculate scores for each section
-    db.query("SELECT * FROM questions", (err, allQuestions) => {
+    db.query("SELECT * FROM questions", [], (err, allQuestions) => {
         if (err) {
             console.error(err);
             return res.status(500).send('Error fetching questions');
@@ -211,16 +189,14 @@ router.post('/submit', (req, res) => {
 
         const total_score = quant_score + logical_score + verbal_score;
 
-        // Save result
-        db.query("INSERT INTO results (student_id, quant_score, logical_score, verbal_score, total_score) VALUES (?, ?, ?, ?, ?)", 
+        db.query("INSERT INTO results (student_id, quant_score, logical_score, verbal_score, total_score) VALUES ($1, $2, $3, $4, $5)", 
                 [req.session.student.id, quant_score, logical_score, verbal_score, total_score], (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Error saving result');
             }
 
-            // Update student status
-            db.query("UPDATE students SET has_attempted = 1 WHERE roll_no = ?", [roll_no], (err) => {
+            db.query("UPDATE students SET has_attempted = true WHERE roll_no = $1", [roll_no], (err) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).send('Error updating student');
@@ -239,9 +215,6 @@ router.post('/submit', (req, res) => {
     });
 });
 
-// ==========================
-// LOGOUT
-// ==========================
 router.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/');

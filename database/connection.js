@@ -1,25 +1,27 @@
-const mysql = require("mysql2");
+const { Pool } = require("pg");
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT || 3306,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
 });
 
-pool.getConnection((err, connection) => {
+pool.connect((err, client, release) => {
   if (err) {
-    console.error("❌ MySQL pool connection failed:", err.message);
+    console.error("PostgreSQL pool connection failed:", err.message);
   } else {
-    console.log("✅ MySQL pool connected successfully");
-    connection.release();
+    console.log("PostgreSQL pool connected successfully");
+    release();
   }
 });
 
-module.exports = pool;
+const query = (text, params, callback) => {
+  const pgText = text;
+  pool.query(pgText, params, (err, res) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, res.rows);
+    }
+  });
+};
 
-
+module.exports = { query };

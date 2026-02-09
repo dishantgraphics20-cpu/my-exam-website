@@ -7,49 +7,38 @@ const db = require('./database/connection.js');
 
 const app = express();
 
-// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
+app.set('trust proxy', 1);
 
-// Session configuration
 app.use(session({
-    secret: 'aptitude-quest-secret-key',
+    secret: process.env.SESSION_SECRET || 'aptitude-quest-secret-key',
     resave: false,
     saveUninitialized: false,
     cookie: { 
         secure: false,
-        maxAge: 3600000 // 1 hour
+        maxAge: 3600000
     }
 }));
 
-// Routes
 app.use('/', require('./routes/index'));
 app.use('/student', require('./routes/student'));
 app.use('/admin', require('./routes/admin'));
 
+const PORT = 5000;
 
-
-// Start server
-const PORT = process.env.PORT || 10000;
-
-const server = app.listen(PORT, () => {
-    console.log(`🚀 Aptitude Quest server running on port ${PORT}`);
-    console.log(`🌐 Access the application at: http://localhost:${PORT}`);
+const server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Aptitude Quest server running on port ${PORT}`);
 });
 
-// Handle port already in use error
 server.on('error', (err) => {
     if (err.code === 'EADDRINUSE') {
-        console.error(`❌ Port ${PORT} is already in use`);
-        console.log('💡 Solutions:');
-        console.log('   1. Close the existing server process on this port');
-        console.log('   2. Use a different port: PORT=3001 npm start');
-        console.log('   3. Kill the process: taskkill /F /IM node.exe');
+        console.error(`Port ${PORT} is already in use`);
         process.exit(1);
     } else {
-        console.error('❌ Server error:', err);
+        console.error('Server error:', err);
         process.exit(1);
     }
 });
