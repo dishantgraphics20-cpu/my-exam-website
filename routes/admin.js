@@ -181,7 +181,7 @@ router.post('/questions/edit/:id', (req, res) => {
     });
 });
 
-router.post('/questions/delete/:id', (req, res) => {
+router.get('/questions/delete/:id', (req, res) => {
     if (!req.session.admin) {
         return res.redirect('/admin/login');
     }
