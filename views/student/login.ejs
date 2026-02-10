@@ -22,7 +22,7 @@
                 </div>
             <% } %>
             
-            <form action="/student/login" method="POST">
+            <form action="/student/login" method="POST" onsubmit="localStorage.removeItem('testAnswers_' + document.getElementById('roll_no').value)">
                 <div class="form-group">
                     <label for="roll_no">Roll Number</label>
                     <input type="text" id="roll_no" name="roll_no" required placeholder="Enter 4-digit roll number">

@@ -124,13 +124,15 @@
                 for (let [key, value] of formData.entries()) {
                     answers[key] = value;
                 }
-                localStorage.setItem('testAnswers', JSON.stringify(answers));
+                const rollNo = '<%= student.roll_no %>';
+                localStorage.setItem('testAnswers_' + rollNo, JSON.stringify(answers));
             });
         });
 
         // Restore answers
         window.addEventListener('load', function() {
-            const savedAnswers = localStorage.getItem('testAnswers');
+            const rollNo = '<%= student.roll_no %>';
+            const savedAnswers = localStorage.getItem('testAnswers_' + rollNo);
             if (savedAnswers) {
                 const answers = JSON.parse(savedAnswers);
                 for (let [key, value] of Object.entries(answers)) {
