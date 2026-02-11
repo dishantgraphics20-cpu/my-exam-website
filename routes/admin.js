@@ -71,9 +71,9 @@ router.get('/dashboard', (req, res) => {
                 const totalResults = resultCount[0].totalResults;
 
                 const stats = {
-                    totalStudents: totalStudents,
-                    totalQuestions: totalQuestions,
-                    totalResults: totalResults
+                    students: totalStudents,
+                    questions: totalQuestions,
+                    results: totalResults
                 };
 
                 res.render('admin/dashboard', {
