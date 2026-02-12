@@ -49,24 +49,24 @@
                         <% let rank = 1; %>
                         <% results.forEach(function(result) { %>
                             <tr id="student-<%= result.student_id %>">
-                                <td>
+                                <td data-label="Rank">
                                     <span style="background: #667eea; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-weight: 600;">
                                         #<%= rank %>
                                     </span>
                                 </td>
-                                <td><strong><%= result.roll_no %></strong></td>
-                                <td>
+                                <td data-label="Roll Number"><strong><%= result.roll_no %></strong></td>
+                                <td data-label="Total Score">
                                     <span style="font-weight: 600; color: #667eea; font-size: 1.1rem;"><%= result.total_score %>/60</span>
                                 </td>
-                                <td>
+                                <td data-label="Percentage">
                                     <span style="font-weight: 600; color: <%= result.total_score >= 40 ? '#28a745' : result.total_score >= 30 ? '#ffc107' : '#dc3545' %>;">
                                         <%= Math.round((result.total_score/60)*100) %>%
                                     </span>
                                 </td>
-                                <td><%= result.quant_score %>/20</td>
-                                <td><%= result.logical_score %>/20</td>
-                                <td><%= result.verbal_score %>/20</td>
-                                <td><%= new Date(result.submitted_at).toLocaleDateString() %></td>
+                                <td data-label="Quant"><%= result.quant_score %>/20</td>
+                                <td data-label="Logical"><%= result.logical_score %>/20</td>
+                                <td data-label="Verbal"><%= result.verbal_score %>/20</td>
+                                <td data-label="Date"><%= new Date(result.submitted_at).toLocaleDateString() %></td>
                             </tr>
                             <% rank++; %>
                         <% }); %>
