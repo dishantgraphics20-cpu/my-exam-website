@@ -217,6 +217,31 @@ router.get('/students', (req, res) => {
     });
 });
 
+router.get('/students/delete/:id', (req, res) => {
+    if (!req.session.admin) {
+        return res.redirect('/admin/login');
+    }
+
+    const studentId = req.params.id;
+
+    // First delete associated results, then the student
+    db.query('DELETE FROM results WHERE student_id = $1', [studentId], (err) => {
+        if (err) {
+            console.error('Error deleting student results:', err);
+            return res.status(500).send('Error deleting student results');
+        }
+
+        db.query('DELETE FROM students WHERE id = $1', [studentId], (err) => {
+            if (err) {
+                console.error('Error deleting student:', err);
+                return res.status(500).send('Error deleting student');
+            }
+
+            res.redirect('/admin/students');
+        });
+    });
+});
+
 router.get('/results', (req, res) => {
     if (!req.session.admin) {
         return res.redirect('/admin/login');
