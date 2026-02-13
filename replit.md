@@ -4,6 +4,12 @@
 An online aptitude examination platform built with Node.js, Express, and EJS templates. Students can log in with a 4-digit roll number and take aptitude tests. Admins can manage questions, students, and view results.
 
 ## Recent Changes
+- 2026-02-13: Completed import migration to Replit environment
+  - Installed all npm dependencies (express, ejs, pg, express-session, etc.)
+  - Replaced `bcrypt` with `bcryptjs` (native module compatibility fix)
+  - Created PostgreSQL tables (students, admins, questions, results)
+  - Seeded default admin account and sample students
+  - Verified app runs successfully on port 5000
 - 2026-02-09: Imported from GitHub and adapted for Replit environment
   - Converted from MySQL to PostgreSQL (Replit built-in database)
   - Updated server to bind to 0.0.0.0:5000
