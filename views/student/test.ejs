@@ -1,4 +1,18 @@
 <!DOCTYPE html>
+
+<%
+  if (!questions || questions.length === 0) {
+    questions = [
+      {
+        question: "If the cost price is ₹400 and profit is 25%, find the selling price.",
+        options: ["₹450", "₹480", "₹520", "₹500"],
+        answer: 1
+      }
+    ];
+  }
+%>
+
+    
 <html lang="en">
 <head>
     <meta charset="UTF-8">
