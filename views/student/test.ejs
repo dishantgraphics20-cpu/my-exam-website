@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -27,7 +26,6 @@
             <div class="timer" id="timer">
                 ⏱️ Time Remaining: <span id="time">60:00</span>
             </div>
-            
 
             <form id="testForm" action="/student/submit" method="POST">
                 <% 
@@ -37,19 +35,6 @@
                     { id: 'verbal', title: 'Verbal Ability' }
                 ];
                 %>
-                    <!-- FORCE SHOW QUESTION (EMERGENCY FIX) -->
-                    <div class="question-card" style="background:#fff;padding:20px;border-radius:12px;margin-top:20px;">
-                      <h3>Q.1</h3>
-                      <p>If the cost price is ₹400 and profit is 25%, find the selling price.</p>
-
-                      <div style="margin-top:15px;">
-                        <label><input type="radio" name="q1"> ₹450</label><br>
-                        <label><input type="radio" name="q1"> ₹480</label><br>
-                        <label><input type="radio" name="q1"> ₹520</label><br>
-                        <label><input type="radio" name="q1"> ₹500</label>
-                      </div>
-                    </div>
-                    <!-- FORCE SHOW QUESTION END -->
 
                 <% sections.forEach(section => { %>
                     <div class="section-header-pill">
