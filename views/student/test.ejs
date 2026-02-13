@@ -85,6 +85,27 @@
                         <div class="no-questions-pill">No questions added yet for this section.</div>
                     <% } %>
                 <% }); %>
+                    <div style="background:#fff; padding:20px; border-radius:10px;">
+
+                      <% if (questions && questions.length > 0) { %>
+                        <% questions.forEach(function(question, index) { %>
+
+                          <div class="question-card" style="margin-bottom:20px;">
+                            <div class="question-title">
+                              Q.<%= index + 1 %>
+                            </div>
+
+                            <div class="question-text">
+                              <%= question.question %>
+                            </div>
+                          </div>
+
+                        <% }); %>
+                      <% } else { %>
+                        <p>No questions found.</p>
+                      <% } %>
+
+                    </div>
 
                 <div style="text-align: center; margin-top: 2rem; margin-bottom: 4rem;">
                     <button type="submit" class="submit-test">
