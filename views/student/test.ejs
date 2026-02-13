@@ -42,7 +42,10 @@
                     </div>
 
                     <% 
-                    const sectionQuestions = questions.filter(q => q.section === section.id);
+                        const sectionQuestions = questions.filter(
+                          q => q.section && q.section.toLowerCase() === section.id
+                        );
+
                     let qCount = 1;
                     %>
 
