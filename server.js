@@ -9,7 +9,14 @@ const app = express();
 app.use((req, res, next) => {
     res.setHeader(
         "Content-Security-Policy",
-        "script-src 'self' 'unsafe-inline'",
+        [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://replit-cdn.com",
+            "script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://replit-cdn.com",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "font-src 'self' https://fonts.gstatic.com",
+            "img-src 'self' data:",
+        ].join("; "),
     );
     next();
 });
