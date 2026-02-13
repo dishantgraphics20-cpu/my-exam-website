@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 const db = require('../database/connection');
 
 router.get('/login', (req, res) => {
@@ -20,18 +21,28 @@ router.post('/login', (req, res) => {
 
         if (results.length > 0) {
             const admin = results[0];
-            if (password === admin.password) {
-                req.session.admin = {
-                    id: admin.id,
-                    email: admin.email
-                };
-                res.redirect('/admin/dashboard');
-            } else {
-                res.render('admin/login', { 
-                    title: 'Admin Login - Aptitude Quest',
-                    error: 'Invalid email or password' 
-                });
-            }
+            bcrypt.compare(password, admin.password, (err, isMatch) => {
+                if (err) {
+                    console.error('Bcrypt error:', err);
+                    return res.render('admin/login', { 
+                        title: 'Admin Login - Aptitude Quest',
+                        error: 'An error occurred during login.' 
+                    });
+                }
+
+                if (isMatch) {
+                    req.session.admin = {
+                        id: admin.id,
+                        email: admin.email
+                    };
+                    res.redirect('/admin/dashboard');
+                } else {
+                    res.render('admin/login', { 
+                        title: 'Admin Login - Aptitude Quest',
+                        error: 'Invalid email or password' 
+                    });
+                }
+            });
         } else {
             res.render('admin/login', { 
                 title: 'Admin Login - Aptitude Quest',
