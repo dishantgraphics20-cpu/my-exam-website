@@ -35,15 +35,56 @@
                     { id: 'verbal', title: 'Verbal Ability' }
                 ];
                 %>
-                    <% questions.forEach(function(question) { %>
-                      <div class="question-card">
-                        <div class="question-title">Q.</div>
-                        <div class="question-text">
-                          <%= question.question %>
-                        </div>
-                      </div>
-                    <% }); %>
 
+                <% sections.forEach(section => { %>
+                    <div class="section-header-pill">
+                        <%= section.title %>
+                    </div>
+
+                    <% 
+                        const sectionQuestions = questions.filter(
+                          q => q.section && q.section.toLowerCase() === section.id
+                        );
+
+                    let qCount = 1;
+                    %>
+
+                    <% if (sectionQuestions.length > 0) { %>
+                        <% sectionQuestions.forEach(function(question) { %>
+                            <div class="question-card">
+                                <div class="question-title">Q.<%= qCount %>.</div>
+                                <div class="question-text">
+                                    <%= question.question %>
+                                </div>
+                                <div class="options-simple">
+                                    <label class="option-simple">
+                                        <input type="radio" name="q<%= question.id %>" value="a">
+                                        <span class="option-letter">A</span>
+                                        <span class="option-text"><%= question.option_a %></span>
+                                    </label>
+                                    <label class="option-simple">
+                                        <input type="radio" name="q<%= question.id %>" value="b">
+                                        <span class="option-letter">B</span>
+                                        <span class="option-text"><%= question.option_b %></span>
+                                    </label>
+                                    <label class="option-simple">
+                                        <input type="radio" name="q<%= question.id %>" value="c">
+                                        <span class="option-letter">C</span>
+                                        <span class="option-text"><%= question.option_c %></span>
+                                    </label>
+                                    <label class="option-simple">
+                                        <input type="radio" name="q<%= question.id %>" value="d">
+                                        <span class="option-letter">D</span>
+                                        <span class="option-text"><%= question.option_d %></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <% qCount++; %>
+                        <% }); %>
+                    <% } else { %>
+                        <div class="no-questions-pill">No questions added yet for this section.</div>
+                    <% } %>
+                <% }); %>
 
                 <div style="text-align: center; margin-top: 2rem; margin-bottom: 4rem;">
                     <button type="submit" class="submit-test">
